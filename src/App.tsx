@@ -16,7 +16,6 @@ interface APIData{
 
 const App = () => {
 
-  const [rowClick, setRowClick] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false)
   const [apiData, setApiData] = useState<APIData[]>([])
   const [totalRecords, setTotalRecords] = useState(0)
@@ -128,7 +127,7 @@ const App = () => {
         lazy
         
         first={lazyParams.first}
-        selectionMode={rowClick ? null : 'checkbox'} selection={selectedRows.filter(row=>apiData.some(r=>r.id === row.id))} onSelectionChange={onSelectionChange} paginator rows={12}
+        selectionMode={'checkbox'} selection={selectedRows.filter(row=>apiData.some(r=>r.id === row.id))} onSelectionChange={onSelectionChange} paginator rows={12}
         totalRecords={totalRecords}
         onPage={onPageChange}
         loading={isLoading}
