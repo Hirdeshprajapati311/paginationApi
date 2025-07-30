@@ -97,6 +97,7 @@ const App = () => {
       page += 1;
     }
     setSelectedRows(selected)
+    op.current?.hide();
   } 
 
 
