@@ -11,7 +11,11 @@ import { useRef } from 'react';
 interface APIData{
   id: number;
   title: string;
-  artist_display:string
+  place_of_origin: string
+  artist_display: string
+  inscriptions: string
+  date_start: string
+  date_end:string
 }
 
 const App = () => {
@@ -27,7 +31,7 @@ const App = () => {
     page: 0,
   });
   const op = useRef<OverlayPanel>(null);
-  const [selectCount, setSelectCount] = useState<number>(0)
+  const [selectCount, setSelectCount] = useState<number | undefined>()
 
 
   const fetchData = async (page: number = 1) => {
@@ -59,46 +63,35 @@ const App = () => {
   } 
 
   const onSelectionChange = (e: { value: APIData[] }) => {
-
-    const updatedSelection = [...selectedRows];
-
-    apiData.forEach(row => {
-      const index = updatedSelection.findIndex(r => r.id === row.id);
-      if (index > -1) {
-        updatedSelection.splice(index, 1);
-      }
-    });
-
-    updatedSelection.push(...e.value);   
-
-    setSelectedRows(updatedSelection)
+    setSelectedRows(e.value)
   }
 
   const onSubmithandler = async () => {
     const rowsToSelect = Number(selectCount);
     if (isNaN(rowsToSelect) || rowsToSelect <= 0) return;
 
-    const selected: APIData[] = [];
-    let page = 1;
+    const itemsPerPage = 12;
+    const pagesNeeded = Math.ceil(rowsToSelect / itemsPerPage);
 
-    while (selected.length < rowsToSelect) {
-      const res = await fetch(`https://api.artic.edu/api/v1/artworks?page=${page}`)
-      const data = await res.json();
+    try {
+      setIsLoading(true);
 
-      if (!data.data || data.data.length === 0) break;
+      const fetches = Array.from({ length: pagesNeeded }, (_, i) =>
+        fetch(`https://api.artic.edu/api/v1/artworks?page=${i + 1}`).then(res => res.json())
+      );
 
-      for (let item of data.data) {
-        if (selected.length < rowsToSelect) {
-          selected.push(item);
-        } else {
-          break;
-        }
-      }
-      page += 1;
+      const results = await Promise.all(fetches);
+      const allItems = results.flatMap(res => res.data);
+
+      setSelectedRows(allItems.slice(0, rowsToSelect));
+      op.current?.hide();
+    } catch (error) {
+      console.error('Bulk fetch failed:', error);
+    } finally {
+      setIsLoading(false);
     }
-    setSelectedRows(selected)
-    op.current?.hide();
-  } 
+  };
+
 
 
 
@@ -126,7 +119,6 @@ const App = () => {
       <DataTable
         value={apiData}
         lazy
-        
         first={lazyParams.first}
         selectionMode={'checkbox'} selection={selectedRows.filter(row=>apiData.some(r=>r.id === row.id))} onSelectionChange={onSelectionChange} paginator rows={12}
         totalRecords={totalRecords}
@@ -137,9 +129,12 @@ const App = () => {
       >
         <Column selectionMode='multiple' headerStyle={{ width: '3rem' }}></Column>
         <Column body={()=>null} header={idHeaderTemplate} />
-        <Column field='id' header="ID" ></Column>
         <Column field='title' header='Title' ></Column>
+        <Column field='place_of_origin' header="Origin" />
         <Column field='artist_display' header="Artist" ></Column>
+        <Column field='inscriptions' header="Inscriptions" />
+        <Column field='date_start' header="Start date" />
+        <Column field='date_end' header="End date" />
         </DataTable>
    
       
