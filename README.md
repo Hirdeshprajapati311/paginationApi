@@ -1,69 +1,53 @@
-# React + TypeScript + Vite
+# Artworks DataTable App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A **React + TypeScript** application that displays artworks from the **Art Institute of Chicago API** in a **PrimeReact DataTable** with server-side pagination, row selection, and a custom selection panel.
 
-Currently, two official plugins are available:
+<img width="1918" height="886" alt="image" src="https://github.com/user-attachments/assets/75cdac31-cc6d-463d-bb91-9e21bc6c94a4" />
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<img width="1918" height="886" alt="image" src="https://github.com/user-attachments/assets/d84feadf-b450-4f7f-80b7-9f24f43cc086" />
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Features
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+- **Vite + TypeScript**: Modern React setup with type safety.
+- **PrimeReact DataTable** with:
+  - Server-side pagination
+  - Checkbox row selection
+  - Lazy loading (fetches only current page)
+- **Custom row selection panel**:
+  - Select a specific number of rows
+  - Selections persist across page changes
+- **Robust API handling**:
+  - Loading indicators
+  - Safe handling of invalid or out-of-range row counts
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## API
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- **Endpoint**: [Art Institute of Chicago API](https://api.artic.edu/api/v1/artworks?page=1)
+- **Fields displayed**:
+  - `title` – Artwork title
+  - `place_of_origin` – Origin of artwork
+  - `artist_display` – Artist information
+  - `inscriptions` – Artwork inscriptions
+  - `date_start` – Start date
+  - `date_end` – End date
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
+
+## Installation
+
+1. Clone the repository:
+```bash
+git clone <your-repo-url>
+cd <your-project-folder>
+
+
+
+
+
+
+
