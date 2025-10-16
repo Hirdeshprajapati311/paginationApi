@@ -2,7 +2,7 @@
 
 A **React + TypeScript** application that displays artworks from the **Art Institute of Chicago API** in a **PrimeReact DataTable** with server-side pagination, row selection, and a custom selection panel.
 
-<img width="1918" height="886" alt="image" src="https://github.com/user-attachments/assets/75cdac31-cc6d-463d-bb91-9e21bc6c94a4" />
+<img width="1919" height="870" alt="image" src="https://github.com/user-attachments/assets/7834db66-7fe3-49d1-934a-d0c17e5b7fc5" />
 
 <img width="1918" height="886" alt="image" src="https://github.com/user-attachments/assets/d84feadf-b450-4f7f-80b7-9f24f43cc086" />
 
